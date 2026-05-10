@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from agents.orchestrator import generate_content
 
 app = FastAPI()
 
@@ -12,7 +13,11 @@ def home():
 
 @app.post("/generate")
 def generate(data: PromptRequest):
+
+    result = generate_content(data.prompt)
+
     return {
+        "status": "success",
         "prompt": data.prompt,
-        "content": f"Generated content for: {data.prompt}"
+        "generated_content": str(result)
     }
