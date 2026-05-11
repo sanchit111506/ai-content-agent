@@ -1,4 +1,6 @@
 from crewai import Agent
+from llm import ollama_llm
+
 
 writer_agent = Agent(
     role="AI Content Writer",
@@ -15,7 +17,7 @@ writer_agent = Agent(
     - AI content
     """,
 
-    llm="ollama/llama3",
+    llm=ollama_llm,
 
     verbose=True
 )

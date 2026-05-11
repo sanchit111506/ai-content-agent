@@ -1,21 +1,20 @@
 from crewai import Agent
+from llm import ollama_llm
+
 
 seo_agent = Agent(
-    role="SEO Specialist",
+    role="SEO Optimization Specialist",
 
     goal="""
     Optimize content for SEO, readability,
-    engagement and keyword density
+    engagement and keyword optimization.
     """,
 
     backstory="""
-    Professional SEO expert specialized in:
-    - keyword optimization
-    - readability improvement
-    - engagement optimization
+    Expert SEO strategist and content optimizer.
     """,
 
-    llm="ollama/llama3",
+    llm=ollama_llm,
 
     verbose=True
 )

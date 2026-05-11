@@ -1,23 +1,37 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from agents.orchestrator import generate_content
+from backend.chat import router as chat_router
+
+from fastapi import FastAPI, UploadFile, File
+import shutil
+import os
+
+from storage.ingest import ingest_pdf
 
 app = FastAPI()
 
-class PromptRequest(BaseModel):
-    prompt: str
+app.include_router(chat_router)
 
-@app.get("/")
-def home():
-    return {"message": "AI Content Agent Running"}
+UPLOAD_FOLDER = "uploads"
 
-@app.post("/generate")
-def generate(data: PromptRequest):
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    result = generate_content(data.prompt)
+
+@app.post("/upload-pdf")
+async def upload_pdf(file: UploadFile = File(...)):
+
+    file_path = os.path.join(
+        UPLOAD_FOLDER,
+        file.filename
+    )
+
+    # Save uploaded PDF
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    # Automatically ingest into RAG
+    result = ingest_pdf(file_path)
 
     return {
-        "status": "success",
-        "prompt": data.prompt,
-        "generated_content": str(result)
+        "message": "PDF uploaded and indexed successfully!",
+        "filename": file.filename,
+        "rag_result": result
     }
