@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+/* =========================================
+   THEME SYSTEM
+========================================= */
+
+/* DARK THEME (default) */
+:root,
+[data-theme="dark"] {
+  --bg-primary:        #0f0f0f;
+  --bg-secondary:      #171717;
+  --bg-elevated:       #1f1f1f;
+  --bg-hover:          #2a2a2a;
+  --bg-active:         #2f2f2f;
+  --bg-input:          #1f1f1f;
+  --bg-bubble-user:    #2a2a2a;
+  --bg-bubble-ai:      transparent;
+
+  --border-primary:    #2a2a2a;
+  --border-secondary:  #3a3a3a;
+  --border-focus:      #525252;
+
+  --text-primary:      #ececec;
+  --text-secondary:    #b8b8b8;
+  --text-tertiary:     #8a8a8a;
+  --text-muted:        #5a5a5a;
+
+  --accent-bg:         #2f2f2f;
+  --accent-text:       #ffffff;
+  --pill-active-bg:    #2f2f2f;
+  --pill-active-text:  #ffffff;
+  --pill-bg:           transparent;
+
+  --link:              #7eb8ff;
+  --link-hover:        #a5cdff;
+
+  --code-bg:           #1a1a1a;
+  --code-border:       #2a2a2a;
+  --code-text:         #ff9e64;
+  --code-header-bg:    #0f0f0f;
+
+  --send-btn-bg:       #ffffff;
+  --send-btn-text:     #000000;
+
+  --scrollbar-thumb:        #3a3a3a;
+  --scrollbar-thumb-hover:  #505050;
+
+  --logo-icon-bg:      linear-gradient(135deg, #6366f1, #a855f7);
+}
+
+/* LIGHT THEME — refined warm cream */
+[data-theme="light"] {
+  --bg-primary:        #f5f2e9;   /* main canvas — warm cream */
+  --bg-secondary:      #efebde;   /* sidebar — slightly darker cream */
+  --bg-elevated:       #ffffff;   /* cards, input, bubbles — pure white */
+  --bg-hover:          #e8e3d3;
+  --bg-active:         #ffffff;
+  --bg-input:          #ffffff;
+  --bg-bubble-user:    #ffffff;
+  --bg-bubble-ai:      #ffffff;
+
+  --border-primary:    #d9d4c2;
+  --border-secondary:  #c4bea8;
+  --border-focus:      #a8a28a;
+
+  --text-primary:      #1a1a1a;
+  --text-secondary:    #3d3d3d;
+  --text-tertiary:     #6b6b6b;
+  --text-muted:        #999999;
+
+  --accent-bg:         #d4e3ff;   /* soft blue pill for active mode */
+  --accent-text:       #1e40af;
+  --pill-active-bg:    #d4e3ff;
+  --pill-active-text:  #1e40af;
+  --pill-bg:           #ffffff;
+
+  --link:              #2563eb;
+  --link-hover:        #1d4ed8;
+
+  --code-bg:           #f5f3eb;
+  --code-border:       #d9d4c2;
+  --code-text:         #c2410c;
+  --code-header-bg:    #ebe7d8;
+
+  --send-btn-bg:       #1a1a1a;
+  --send-btn-text:     #ffffff;
+
+  --scrollbar-thumb:        #c8c2ad;
+  --scrollbar-thumb-hover:  #a8a28a;
+
+  --logo-icon-bg:      linear-gradient(135deg, #6366f1, #a855f7);
+}
+
+/* =========================================
+   GLOBAL RESETS
+========================================= */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+               "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+* { box-sizing: border-box; }
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* =========================================
+   TYPING DOTS
+========================================= */
+@keyframes bounce-dot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%           { transform: translateY(-4px); opacity: 1; }
+}
+.typing-dot { animation: bounce-dot 1.2s infinite ease-in-out; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+/* =========================================
+   MARKDOWN
+========================================= */
+.markdown-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  word-wrap: break-word;
+}
+.markdown-body p { margin: 0 0 12px 0; }
+.markdown-body p:last-child { margin-bottom: 0; }
+.markdown-body h1, .markdown-body h2,
+.markdown-body h3, .markdown-body h4 {
+  font-weight: 600;
+  margin: 20px 0 10px 0;
+  color: var(--text-primary);
+}
+.markdown-body h1 { font-size: 1.5rem; }
+.markdown-body h2 { font-size: 1.3rem; }
+.markdown-body h3 { font-size: 1.15rem; }
+.markdown-body h4 { font-size: 1rem; }
+.markdown-body ul, .markdown-body ol {
+  margin: 8px 0 12px 0;
+  padding-left: 24px;
+}
+.markdown-body li { margin: 4px 0; }
+.markdown-body strong { font-weight: 600; color: var(--text-primary); }
+.markdown-body em { font-style: italic; }
+.markdown-body a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.markdown-body a:hover { color: var(--link-hover); }
+.markdown-body blockquote {
+  border-left: 3px solid var(--border-secondary);
+  padding: 4px 0 4px 14px;
+  margin: 12px 0;
+  color: var(--text-secondary);
+}
+.markdown-body table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  width: 100%;
+  font-size: 14px;
+}
+.markdown-body th, .markdown-body td {
+  border: 1px solid var(--border-primary);
+  padding: 8px 12px;
+  text-align: left;
+}
+.markdown-body th {
+  background: var(--bg-hover);
+  font-weight: 600;
+}
+.markdown-body code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: "JetBrains Mono", "Menlo", Consolas, monospace;
+  color: var(--code-text);
+}
+.markdown-body pre {
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+}
+.markdown-body pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border-primary);
+  margin: 16px 0;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fade-in-up 0.25s ease-out; }
+
+/* =========================================
+   TEXTAREA
+========================================= */
+.chat-textarea {
+  resize: none;
+  field-sizing: content;
+  max-height: 200px;
+  overflow-y: auto;
+}

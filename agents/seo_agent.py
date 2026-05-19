@@ -1,20 +1,53 @@
 from crewai import Agent
-from llm import ollama_llm
+from crewai.tools import tool
+
+from tools.search_tool import search_web
+from llm import moderate_llm
+
+
+@tool("SEO Web Research Tool")
+def seo_web_search(query: str):
+    """
+    Search SEO trends, keyword opportunities and optimization strategies.
+    """
+    return search_web(query)
 
 
 seo_agent = Agent(
-    role="SEO Optimization Specialist",
+    role="SEO & Content Optimization Specialist",
 
     goal="""
-    Optimize content for SEO, readability,
-    engagement and keyword optimization.
+    Optimize content for SEO and readability.
+
+    Responsibilities:
+    - keyword optimization
+    - SEO structure
+    - readability improvement
+    - engagement optimization
+    - search visibility
+
+    Rules:
+    - Always respond in English only
+    - Use proper heading structure
+    - Keep SEO natural
+    - Avoid keyword stuffing
+    - Prioritize readability
     """,
 
     backstory="""
-    Expert SEO strategist and content optimizer.
+    Advanced SEO strategist specialized in:
+    - Google ranking optimization
+    - search intent
+    - content structure
+    - modern SEO practices
+    - technical blogging
     """,
 
-    llm=ollama_llm,
+    tools=[seo_web_search],
 
-    verbose=True
+    llm=moderate_llm,  # qwen2.5:7b
+
+    verbose=False,
+    allow_delegation=False,
+    max_iter=1,
 )
